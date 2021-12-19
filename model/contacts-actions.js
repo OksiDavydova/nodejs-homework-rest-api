@@ -5,7 +5,7 @@ const crypto = require("crypto");
 const contactPath = path.join(__dirname, "contacts.json");
 
 class Contacts {
-  readContent = async () => {
+  async readContent() {
     try {
       const content = await fs.readFile(contactPath, "utf8");
       const result = JSON.parse(content);
@@ -13,20 +13,20 @@ class Contacts {
     } catch (err) {
       console.error(err.message);
     }
-  };
+  }
 
-  listContacts = async () => {
+  async listContacts() {
     const contacts = await this.readContent();
     return contacts;
-  };
+  }
 
-  getById = async (contactId) => {
+  async getById(contactId) {
     const contacts = await this.readContent();
     const [contact] = contacts.filter((contact) => contact.id === contactId);
     return contact;
-  };
+  }
 
-  removeContact = async (contactId) => {
+  async removeContact(contactId) {
     const contacts = await this.readContent();
     const index = contacts.findIndex((contact) => contact.id === contactId);
     if (index !== -1) {
@@ -38,9 +38,9 @@ class Contacts {
       return result;
     }
     return null;
-  };
+  }
 
-  addContact = async ({ name, email, phone }) => {
+  async addContact({ name, email, phone }) {
     const contacts = await this.readContent();
     const newContact = { id: crypto.randomUUID(), name, email, phone };
     contacts.push(newContact);
@@ -49,9 +49,9 @@ class Contacts {
       JSON.stringify(contacts, null, 2)
     );
     return newContact;
-  };
+  }
 
-  updateContact = async (contactId, body) => {
+  async updateContact(contactId, body) {
     const contacts = await this.readContent();
     const index = contacts.findIndex((contact) => contact.id === contactId);
     if (index !== -1) {
@@ -64,7 +64,7 @@ class Contacts {
       return updatedContact;
     }
     return null;
-  };
+  }
 }
 
 module.exports = new Contacts();
