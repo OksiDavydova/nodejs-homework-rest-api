@@ -1,14 +1,14 @@
-const fs = require("fs/promises");
-const path = require("path");
-const crypto = require("crypto");
-const { readContent, contactPath } = require("./readContent");
+const db = require("./db");
+const { getCollection } = require("./getCollection");
 
-const addContact = async ({ name, email, phone }) => {
-  const contacts = await readContent();
-  const newContact = { id: crypto.randomUUID(), name, email, phone };
-  contacts.push(newContact);
-  await fs.writeFile(path.join(contactPath), JSON.stringify(contacts, null, 2));
-  return newContact;
+const addContact = async (body) => {
+  const collection = await getCollection(db, "contacts");
+  const newContact = {
+    favorite: false,
+    ...body,
+  };
+  const result = await collection.insertOne(newContact);
+  return result;
 };
 
 module.exports = addContact;

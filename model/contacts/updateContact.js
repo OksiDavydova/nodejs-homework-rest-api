@@ -1,20 +1,16 @@
-const fs = require("fs/promises");
-const path = require("path");
-const { readContent, contactPath } = require("./readContent");
+const { ObjectId } = require("mongodb");
+const db = require("./db");
+const { getCollection } = require("./getCollection");
 
 const updateContact = async (contactId, body) => {
-  const contacts = await readContent();
-  const index = contacts.findIndex((contact) => contact.id === contactId);
-  if (index !== -1) {
-    const updatedContact = { id: contactId, ...contacts[index], ...body };
-    contacts[index] = updatedContact;
-    await fs.writeFile(
-      path.join(contactPath),
-      JSON.stringify(contacts, null, 2)
-    );
-    return updatedContact;
-  }
-  return null;
+  const collection = await getCollection(db, "contacts");
+  const id = ObjectId(contactId);
+  const { value: result } = await collection.findOneAndUpdate(
+    { _id: id },
+    { $set: body },
+    { returnDocument: "after" }
+  );
+  return result;
 };
 
 module.exports = updateContact;

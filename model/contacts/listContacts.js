@@ -1,7 +1,9 @@
-const { readContent } = require("./readContent");
+const db = require("./db");
+const { getCollection } = require("./getCollection");
 
 const listContacts = async () => {
-  const contacts = await readContent();
-  return contacts;
+  const collection = await getCollection(db, "contacts");
+  const result = await collection.find().toArray();
+  return result;
 };
 module.exports = listContacts;
