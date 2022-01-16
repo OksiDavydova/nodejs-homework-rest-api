@@ -9,6 +9,7 @@ const {
   UPLOAD_DIR,
   PORT,
   URI_DB,
+  FOLDER_AVATARS,
 } = process.env;
 
 module.exports = {
@@ -19,4 +20,5 @@ module.exports = {
   UPLOAD_DIR,
   PORT,
   URI_DB,
+  FOLDER_AVATARS,
 };
