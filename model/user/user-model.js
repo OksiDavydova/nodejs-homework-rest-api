@@ -1,5 +1,6 @@
 const { Schema, model } = require("mongoose");
 const bcrypt = require("bcryptjs");
+const gravatar = require("gravatar");
 const { Role } = require("../../utils");
 
 const userSchema = new Schema(
@@ -24,6 +25,16 @@ const userSchema = new Schema(
         message: "Role in not allowed",
       },
       default: Role.STARTER,
+    },
+    avatarURL: {
+      type: String,
+      default: function () {
+        return gravatar.url(this.email, { s: "250" }, true);
+      },
+    },
+    idAvatarCloud: {
+      type: String,
+      default: null,
     },
     token: {
       type: String,

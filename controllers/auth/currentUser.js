@@ -1,5 +1,5 @@
 const { HttpCode } = require("../../utils");
-const AuthService = require("../../service/auth");
+const { AuthService } = require("../../service");
 const authService = new AuthService();
 
 const currentUser = async (req, res, next) => {
@@ -22,7 +22,7 @@ const currentUser = async (req, res, next) => {
   res.status(HttpCode.OK).json({
     status: "success",
     code: HttpCode.OK,
-    data: { user: { ...data } },
+    data: { user: { id: data.id, email: data.email } },
   });
 };
 

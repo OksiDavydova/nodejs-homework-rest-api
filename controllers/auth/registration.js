@@ -1,5 +1,5 @@
 const { HttpCode } = require("../../utils");
-const AuthService = require("../../service/auth");
+const { AuthService } = require("../../service");
 const authService = new AuthService();
 
 const registration = async (req, res, next) => {
@@ -16,7 +16,7 @@ const registration = async (req, res, next) => {
   }
 
   const data = await authService.create(req.body);
-
+  console.log(data);
   res.status(HttpCode.OK).json({
     status: "success",
     code: HttpCode.OK,

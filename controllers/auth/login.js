@@ -1,5 +1,5 @@
 const { HttpCode } = require("../../utils");
-const AuthService = require("../../service/auth");
+const { AuthService } = require("../../service");
 const authService = new AuthService();
 
 const login = async (req, res, next) => {
