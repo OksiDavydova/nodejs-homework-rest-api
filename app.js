@@ -2,11 +2,11 @@ const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
 
-const dotenv = require("dotenv");
-dotenv.config({ path: "./config/.env" });
-const { FOLDER_AVATARS } = process.env;
+const {
+  VARIABLES_ENV: { FOLDER_AVATARS },
+  HttpCode,
+} = require("./utils");
 
-const { HttpCode } = require("./utils");
 const { authRouter, contactsRouter } = require("./routes/api");
 
 const app = express();
