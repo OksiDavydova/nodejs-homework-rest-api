@@ -1,5 +1,4 @@
 const Joi = require("joi");
-// const { Types } = require("mongoose");
 const { HttpCode } = require("../utils");
 
 const userSchema = Joi.object({

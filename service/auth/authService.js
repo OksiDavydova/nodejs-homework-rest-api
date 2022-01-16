@@ -1,9 +1,9 @@
 const jwt = require("jsonwebtoken");
 const { userMethod } = require("../../repository");
 
-const dotenv = require("dotenv");
-dotenv.config({ path: "./config/.env" });
-const { JWT_SECRET_KEY } = process.env;
+const {
+  VARIABLES_ENV: { JWT_SECRET_KEY },
+} = require("../../utils");
 
 class AuthService {
   async isUserExist(email) {
@@ -47,4 +47,4 @@ class AuthService {
     return await jwt.verify(token, JWT_SECRET_KEY);
   }
 }
-module.exports = AuthService;
+module.exports = new AuthService();

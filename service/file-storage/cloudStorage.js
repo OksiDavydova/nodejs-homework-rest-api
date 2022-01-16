@@ -4,9 +4,9 @@ const { userMethod } = require("../../repository");
 const { updateAvatar } = userMethod;
 const { unlink } = require("fs/promises");
 
-const dotenv = require("dotenv");
-dotenv.config({ path: "./config/.env" });
-const { CLOUD_NAME, CLOUD_API_KEY, CLOUD_API_SECRET } = process.env;
+const {
+  VARIABLES_ENV: { CLOUD_NAME, CLOUD_API_KEY, CLOUD_API_SECRET },
+} = require("../../utils");
 
 // cloud folder's name
 const cloudFolderAvatars = "nodeJShw05";

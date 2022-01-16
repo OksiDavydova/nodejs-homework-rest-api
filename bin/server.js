@@ -1,12 +1,11 @@
 const app = require("../app");
 const db = require("../config");
 const { mkdir } = require("fs/promises");
-const dotenv = require("dotenv");
 require("../helpers");
-dotenv.config({ path: "./config/.env" });
 
-const { UPLOAD_DIR } = process.env;
-const { PORT } = process.env || 3001;
+const {
+  VARIABLES_ENV: { PORT = 3001, UPLOAD_DIR },
+} = require("../utils");
 
 db.then(() => {
   app.listen(PORT, async () => {
@@ -16,3 +15,9 @@ db.then(() => {
 }).catch((err) => {
   console.log(`Server not running.Error: ${err.message}`.red.bold);
 });
+
+// const dotenv = require("dotenv");
+// dotenv.config({ path: "./config/.env" });
+
+// const { UPLOAD_DIR } = process.env;
+// const { PORT } = process.env || 3001;

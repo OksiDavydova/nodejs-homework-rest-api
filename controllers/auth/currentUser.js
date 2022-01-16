@@ -1,6 +1,5 @@
 const { HttpCode } = require("../../utils");
 const { AuthService } = require("../../service");
-const authService = new AuthService();
 
 const currentUser = async (req, res, next) => {
   const bearerHearder = req.headers.authorization;
@@ -17,7 +16,7 @@ const currentUser = async (req, res, next) => {
   const bearer = bearerHearder.split(" ");
   const token = bearer[1];
 
-  const data = await authService.getCurrentDataFromToken(token);
+  const data = await AuthService.getCurrentDataFromToken(token);
 
   res.status(HttpCode.OK).json({
     status: "success",
