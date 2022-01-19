@@ -1,9 +1,10 @@
 const jwt = require("jsonwebtoken");
 const { userMethod } = require("../repository");
 const { HttpCode } = require("../utils");
-const dotenv = require("dotenv");
-dotenv.config({ path: "./config/.env" });
-const { JWT_SECRET_KEY } = process.env;
+
+const {
+  VARIABLES_ENV: { JWT_SECRET_KEY },
+} = require("../utils");
 
 const verifyToken = (token) => {
   try {

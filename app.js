@@ -2,7 +2,11 @@ const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
 
-const { HttpCode } = require("./utils");
+const {
+  VARIABLES_ENV: { FOLDER_AVATARS },
+  HttpCode,
+} = require("./utils");
+
 const { authRouter, contactsRouter } = require("./routes/api");
 
 const app = express();
@@ -10,8 +14,14 @@ const app = express();
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
 app.use(logger(formatsLogger));
+// folder for static
+app.use(express.static(FOLDER_AVATARS));
 app.use(cors());
 app.use(express.json()); // body parser
+app.use((req, res, next) => {
+  app.set("lang", req.acceptsLanguages(["en", "ru"]));
+  next();
+});
 
 // routes
 app.use("/api/users", authRouter);

@@ -1,12 +1,11 @@
 const pkg = require("mongoose");
 const { connect, connection } = pkg;
-const dotenv = require("dotenv");
-
 require("../helpers");
-const { MESSAGES } = require("../utils");
-dotenv.config({ path: "./config/.env" });
 
-const { URI_DB } = process.env;
+const {
+  MESSAGES,
+  VARIABLES_ENV: { URI_DB },
+} = require("../utils");
 
 const db = connect(URI_DB, {
   useNewUrlParser: true,
