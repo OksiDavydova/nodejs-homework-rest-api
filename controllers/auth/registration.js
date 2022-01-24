@@ -1,26 +1,49 @@
-const { HttpCode } = require("../../utils");
-const { MESSAGES } = require("../../utils");
+const { HttpCode, MESSAGES } = require("../../utils");
 
+const {
+  Email: { EmailService, SenderNodemailer },
+} = require("../../service");
 const { AuthService } = require("../../service");
+const { CustomError } = require("../../helpers");
 
 const registration = async (req, res, next) => {
   const { email } = req.body;
   const isUserExist = await AuthService.isUserExist(email);
 
-  // Email is already exist
+  //  if email has already exist in base -> error
   if (isUserExist) {
-    return res.status(HttpCode.CONFLICT).json({
-      status: "error",
-      code: HttpCode.CONFLICT,
-      message: MESSAGES.emailExist,
-    });
+    throw new CustomError(HttpCode.CONFLICT, MESSAGES.emailExist);
   }
 
-  const data = await AuthService.create(req.body);
+  const userData = await AuthService.create(req.body);
+
+  const emailService = new EmailService(
+    process.env.NODE_ENV,
+    new SenderNodemailer()
+  );
+
+  const isSend = await emailService.sendVerifyEmail(
+    email,
+    userData.name,
+    userData.verificationToken
+  );
+
+  if (!isSend) {
+    throw new CustomError(HttpCode.SE, MESSAGES.ServiceUnv);
+  }
+
   res.status(HttpCode.OK).json({
     status: "success",
     code: HttpCode.OK,
-    data,
+    data: {
+      newUser: {
+        id: userData.id,
+        name: userData.name,
+        email: userData.email,
+        subscription: userData.subscription,
+        avatarURL: userData.avatarURL,
+      },
+    },
   });
 };
 

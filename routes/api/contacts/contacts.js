@@ -1,6 +1,10 @@
 const { Router } = require("express");
 const { contactsControllers } = require("../../../controllers");
-const { guard, contactsValidation } = require("../../../middleware");
+const {
+  guard,
+  contactsValidation,
+  wrapperError,
+} = require("../../../middleware");
 
 const {
   validateCreate,
@@ -19,13 +23,18 @@ const {
 
 const router = Router();
 
-router.route("/").get([guard, validateQuery], getContacts);
-router.route("/:id").get([guard, validateId], getContactById);
-router.route("/").post([guard, validateCreate], postContact);
-router.route("/:id").delete([guard, validateId], removeContact);
-router.route("/:id").put([guard, validateId, validateUpdate], updateContact);
+router.route("/").get([guard, validateQuery], wrapperError(getContacts));
+router.route("/:id").get([guard, validateId], wrapperError(getContactById));
+router.route("/").post([guard, validateCreate], wrapperError(postContact));
+router.route("/:id").delete([guard, validateId], wrapperError(removeContact));
+router
+  .route("/:id")
+  .put([guard, validateId, validateUpdate], wrapperError(updateContact));
 router
   .route("/:id/favorite")
-  .patch([guard, validateId, validateUpdateFavorite], updateContact);
+  .patch(
+    [guard, validateId, validateUpdateFavorite],
+    wrapperError(updateContact)
+  );
 
 module.exports = router;

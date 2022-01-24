@@ -1,10 +1,15 @@
 const { Schema, model } = require("mongoose");
 const bcrypt = require("bcryptjs");
 const gravatar = require("gravatar");
+const { randomUUID } = require("crypto");
 const { Role } = require("../../utils");
 
 const userSchema = new Schema(
   {
+    name: {
+      type: String,
+      default: "user",
+    },
     email: {
       type: String,
       required: [true, "Email is required"],
@@ -40,6 +45,15 @@ const userSchema = new Schema(
       type: String,
       default: null,
     },
+    verify: {
+      type: Boolean,
+      default: false,
+    },
+    verificationToken: {
+      type: String,
+      default: randomUUID(),
+      required: [true, "Verify token is required"],
+    },
   },
   {
     versionKey: false,
@@ -55,8 +69,8 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-userSchema.methods.isValidPassword = async function (password) {
-  return await bcrypt.compare(password, this.password);
+userSchema.methods.isValidPassword = function (password) {
+  return bcrypt.compare(password, this.password);
 };
 
 const User = model("user", userSchema);
