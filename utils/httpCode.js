@@ -9,6 +9,7 @@ const HttpCode = {
   NOT_FOUND: 404,
   CONFLICT: 409,
   INTERNAL_SERVER_ERROR: 500,
+  SE: 503,
 };
 
 module.exports = { HttpCode };

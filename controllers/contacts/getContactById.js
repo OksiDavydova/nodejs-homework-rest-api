@@ -1,5 +1,6 @@
 const { contactRepository } = require("../../repository");
 const { HttpCode } = require("../../utils");
+const { CustomError } = require("../../helpers");
 
 const getContactById = async (req, res, next) => {
   const { id } = req.params;
@@ -10,11 +11,7 @@ const getContactById = async (req, res, next) => {
       .status(HttpCode.OK)
       .json({ status: "success", code: HttpCode.OK, data: { contact } });
   }
-  res.status(HttpCode.NOT_FOUND).json({
-    status: "error",
-    code: HttpCode.NOT_FOUND,
-    message: "Not found",
-  });
+  throw new CustomError(HttpCode.NOT_FOUND, "Not found");
 };
 
 module.exports = getContactById;

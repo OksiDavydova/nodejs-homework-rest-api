@@ -10,6 +10,9 @@ const {
   PORT,
   URI_DB,
   FOLDER_AVATARS,
+  META_UA_PASSWORD,
+  META_UA_EMAIL,
+  NODE_ENV,
 } = process.env;
 
 module.exports = {
@@ -21,4 +24,7 @@ module.exports = {
   PORT,
   URI_DB,
   FOLDER_AVATARS,
+  META_UA_PASSWORD,
+  META_UA_EMAIL,
+  NODE_ENV,
 };

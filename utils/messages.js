@@ -4,6 +4,8 @@ const MESSAGES = {
   errMsg: "Connection to DB 'contacts' failed with error:",
   closeConnection: "Connection  with DB 'contacts' closed",
   emailExist: "Email is already exist",
+  InvalidCred: "Invalid credential",
+  ServiceUnv: "Service Unavailable",
 };
 
 module.exports = { MESSAGES };

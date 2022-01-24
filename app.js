@@ -35,9 +35,13 @@ app.use((req, res) => {
 });
 
 app.use((err, _req, res, _next) => {
-  res.status(HttpCode.INTERNAL_SERVER_ERROR).json({
-    status: "fail",
-    code: HttpCode.INTERNAL_SERVER_ERROR,
+  const ISE = HttpCode.INTERNAL_SERVER_ERROR;
+  const statusCode = err.status || ISE;
+  const status = statusCode === ISE ? "fail" : "error";
+
+  res.status(statusCode).json({
+    status: status,
+    code: statusCode,
     message: err.message,
   });
 });
