@@ -1,5 +1,5 @@
 const colors = require("./colors");
-const chooseLink = require("./chooseLink");
+const setLink = require("./setLink");
 const CustomError = require("./customError");
 
-module.exports = { colors, chooseLink, CustomError };
+module.exports = { colors, setLink, CustomError };

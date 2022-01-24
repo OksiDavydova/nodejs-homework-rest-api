@@ -1,4 +1,4 @@
-function chooseLink(nodeEnv) {
+function setLink(nodeEnv) {
   switch (nodeEnv) {
     case "development":
       return "https://e19b-176-105-198-179.ngrok.io";
@@ -10,8 +10,8 @@ function chooseLink(nodeEnv) {
       return "https://hw-06-dnoksi.herokuapp.com";
 
     default:
-      return "https://e19b-176-105-198-179.ngrok.io";
+      return "http://localhost:3000";
   }
 }
 
-module.exports = chooseLink;
+module.exports = setLink;

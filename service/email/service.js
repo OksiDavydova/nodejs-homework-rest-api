@@ -1,10 +1,10 @@
 const Mailgen = require("mailgen");
-const { chooseLink } = require("../../helpers");
+const { setLink } = require("../../helpers");
 
 class EmailService {
   constructor(env, sender) {
     this.sender = sender;
-    this.link = chooseLink(env);
+    this.link = setLink(env);
   }
 
   createEmailTemplate(userName, verificationToken) {
